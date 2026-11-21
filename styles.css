@@ -1,0 +1,346 @@
+/* Palette — change these to recolor the whole night.
+   Sky, tulips, ribbon, paper, sparks, and type all read from here. */
+:root {
+  --sky-0: #07060e;
+  --sky-1: #140816;
+  --sky-2: #2a1020;
+  --sky-glow: rgba(226, 62, 120, 0.28);
+
+  --blush: #f4c4d0;
+  --soft: #f7a8c4;
+  --hot: #ff4d8d;
+  --rose: #e23e78;
+  --cream: #fff4e8;
+  --gold: #f0c56e;
+  --gold-deep: #d4a04a;
+  --ink: #fff8f1;
+
+  --hot-light: #ffd6e7;
+  --hot-mid: #ff4d8d;
+  --hot-deep: #c21862;
+
+  --blush-light: #fff1f5;
+  --blush-mid: #f3b4c7;
+  --blush-deep: #d9899e;
+
+  --soft-light: #ffe1ed;
+  --soft-mid: #f48cb4;
+  --soft-deep: #d45d8c;
+
+  --cream-light: #fffaf4;
+  --cream-mid: #ffe4d8;
+  --cream-deep: #f0b7ae;
+
+  --rose-light: #ffc2d6;
+  --rose-mid: #e23e78;
+  --rose-deep: #9c1a4e;
+
+  --throat: #6d1234;
+
+  --stem: #1d4634;
+  --stem-light: #5eae80;
+  --leaf: #2f7a52;
+  --leaf-deep: #173728;
+  --leaf-sheen: #b7e0bf;
+
+  --paper: #fff7f3;
+  --paper-shadow: #f4c9d4;
+  --paper-edge: #e7b3c2;
+
+  --seek: 0s;
+}
+
+@font-face {
+  font-family: Fraunces;
+  src: url("fonts/Fraunces-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Fraunces;
+  src: url("fonts/Fraunces-600i.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--sky-0);
+}
+
+body {
+  min-height: 100dvh;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  color: var(--cream);
+  font-family: Fraunces, Georgia, "Palatino Linotype", Palatino, serif;
+  background:
+    radial-gradient(ellipse 95% 48% at 50% 112%, var(--sky-glow), transparent 58%),
+    radial-gradient(ellipse 55% 32% at 50% -5%, #2a1022 0%, transparent 70%),
+    linear-gradient(180deg, var(--sky-0) 0%, var(--sky-1) 46%, var(--sky-2) 100%);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  cursor: pointer;
+  color-scheme: dark;
+}
+
+#sky {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+}
+
+.bouquet {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  height: clamp(500px, 70vh, 760px);
+  width: calc(clamp(500px, 70vh, 760px) * 420 / 640);
+  z-index: 2;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 42%, transparent 52%, rgba(0, 0, 0, 0.42) 100%);
+}
+
+#drifts {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.drift {
+  position: absolute;
+  bottom: 6%;
+  left: var(--x);
+  width: var(--s);
+  height: calc(var(--s) * 1.55);
+  background: var(--c);
+  border-radius: 80% 8% 80% 8%;
+  opacity: 0;
+}
+
+#drifts.on .drift {
+  animation: float var(--dur) linear infinite both;
+  animation-delay: calc(var(--delay) - var(--seek));
+}
+
+@keyframes float {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 6vh, 0) rotate(var(--r));
+  }
+  12% {
+    opacity: var(--o);
+  }
+  78% {
+    opacity: var(--o);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--dx), -50vh, 0) rotate(calc(var(--r) + 160deg));
+  }
+}
+
+.message {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+body.calm .message {
+  position: fixed;
+  z-index: 5;
+  left: 50%;
+  top: max(7vh, calc(env(safe-area-inset-top) + 28px));
+  transform: translateX(-50%);
+  width: min(90vw, 460px);
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  text-align: center;
+  pointer-events: none;
+  font-weight: 700;
+  font-size: clamp(42px, 12vw, 76px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  color: var(--cream);
+  text-shadow:
+    0 0 18px rgba(255, 244, 232, 0.45),
+    0 0 32px rgba(240, 197, 110, 0.35);
+}
+
+.message span {
+  display: block;
+}
+
+.message .love {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+#replay {
+  position: fixed;
+  z-index: 6;
+  top: calc(14px + env(safe-area-inset-top));
+  right: calc(14px + env(safe-area-inset-right));
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--gold) 72%, transparent);
+  background: rgba(10, 6, 14, 0.45);
+  color: var(--cream);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: lowercase;
+  padding: 8px 12px 8px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+#replay svg {
+  display: block;
+}
+
+#replay:hover {
+  background: rgba(28, 12, 22, 0.72);
+}
+
+#replay:active {
+  transform: scale(0.97);
+}
+
+#replay:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+#safe-probe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  padding-top: env(safe-area-inset-top);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.stem {
+  fill: none;
+  stroke-width: 3.3;
+  stroke-linecap: round;
+}
+
+.leaf-sheen {
+  fill: var(--leaf-sheen);
+  opacity: 0.38;
+}
+
+.vein {
+  fill: none;
+  stroke: var(--leaf-deep);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+
+.body {
+  stroke: color-mix(in srgb, var(--cream) 55%, transparent);
+  stroke-width: 0.6;
+  stroke-linejoin: round;
+}
+
+.tone-cream .body {
+  stroke: var(--gold);
+  stroke-width: 0.85;
+}
+
+.shine {
+  fill: var(--cream);
+  opacity: 0.62;
+}
+
+[data-part="throat"] {
+  fill: var(--throat);
+}
+
+.tone-cream [data-part="throat"] {
+  fill: var(--cream-deep);
+}
+
+[data-part="calyx"] {
+  fill: var(--leaf-deep);
+}
+
+[data-part="stamens"] {
+  fill: var(--gold);
+}
+
+.spark path {
+  fill: var(--gold);
+}
+
+.spark.cream path {
+  fill: var(--cream);
+}
+
+@media (max-width: 420px) {
+  .bouquet {
+    height: min(68vh, 620px);
+    width: calc(min(68vh, 620px) * 420 / 640);
+  }
+}
+
+@media (min-width: 900px) {
+  .bouquet {
+    height: min(74vh, 820px);
+    width: calc(min(74vh, 820px) * 420 / 640);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #drifts.on .drift {
+    animation: none;
+  }
+}
