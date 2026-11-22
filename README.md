@@ -1,37 +1,32 @@
 # happy anniversary love
 
-A static night-sky page: a bouquet of tulips grows and blooms, fireworks drift overhead, and the last bursts gather into the words **happy anniversary love**.
+A 3D tulip bouquet drawn with terminal characters. Stems grow, the cups fill in, then the bouquet turns. Fireworks finish by writing **happy anniversary love**.
 
-Open it on a phone. Tap anywhere for another firework. Replay starts the whole show again.
+## Run it in Terminal
 
-## Run locally
+```bash
+python3 bouquet3d.py
+```
 
-From this folder:
+It fits the window. Ctrl+C restores the cursor. Press `r` to replay and space for another firework. Colors are the `PALETTE` dict at the top of `bouquet3d.py`.
+
+## The page
+
+The same picture runs in the browser, in a fake Terminal window. Tap the screen for a firework. Replay starts the build again. The matching palette is `PALETTE` at the top of `main.js` and the `:root` block in `styles.css`.
 
 ```bash
 python3 -m http.server 4317
 ```
 
-Then open [http://127.0.0.1:4317](http://127.0.0.1:4317).
-
-## Colors
-
-Every color lives in the `:root` block at the top of `styles.css`. Change those variables to recolor the sky, tulips, ribbon, and sparks together.
+Open [http://127.0.0.1:4317](http://127.0.0.1:4317).
 
 ## Deploy on Vercel
 
-This is a static site. There is no install step and no build.
+Static site, no install and no build.
 
-1. Import the project in Vercel.
-2. Framework preset: **Other**.
-3. Build command: leave empty.
-4. Output directory: `.` (the project root).
-5. Install command: leave empty.
+- Framework preset: **Other**
+- Build command: empty
+- Output directory: `.`
+- Install command: empty
 
-`index.html` is served from the root. After the first deploy, set the Open Graph image to an absolute URL if a preview does not pick up `og.png`:
-
-```html
-<meta property="og:image" content="https://YOUR-DOMAIN/og.png" />
-```
-
-The page title and `og:title` are `happy anniversary love`.
+The page title and `og:title` are `happy anniversary love`. After deploy, point `og:image` at `https://YOUR-DOMAIN/og.png` if a text preview does not pick up the relative image.
